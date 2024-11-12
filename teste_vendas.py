@@ -11,7 +11,8 @@ while opcao != "4":
     print("2. Remover Produto")
     print("3. Listar Produtos e Mostrar Total")
     print("4. salvar produtos")
-    print("5. Sair")
+    print("5. carregar dados")
+    print("6. Sair")
     
     opcao = input("Escolha uma opção: ")
 
@@ -21,7 +22,7 @@ while opcao != "4":
         preco_valido = False
         while not preco_valido:
             preco = input("Preço do Produto: ")
-            preco = preco.replace(',', '.')  # Substitui vírgulas por pontos
+            preco = preco.replace(',', '.')  
             pontos = 0
             for caractere in preco:
                 if caractere == '.':
@@ -64,7 +65,13 @@ while opcao != "4":
     elif opcao == "4":
         print("arquivo salvo!")
         venda.salvar_venda()
+
     elif opcao == "5":
+        print("a exibir produtos salvos") 
+         venda.carregar_venda()
+         venda.listarProdutos()   
+
+    elif opcao == "6":
         print("Saindo...")
 
     else:

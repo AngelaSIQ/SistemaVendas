@@ -38,10 +38,15 @@ class Venda:
             print(f"\nProdutos na Venda do dia {self.__dataVenda}:")
             for produto in self.__produtos:
                 print(f"Nome: {produto.get_nome()}, Preço: R${produto.get_preco():.2f}, Quantidade: {produto.get_quantidade()}")
+
     def salvar_venda(self):
         produtos = [obj.to_dict() for obj in self.__produtos]
         data = self.__dataVenda
         total = self.__total
         json = js.dumps({"data":data,"total":total,"produtos":produtos})
         with open("venda.json", 'w') as arquivo: 
-            arquivo.write(json) # salvam o arquivo json no pc
+            arquivo.write(json) 
+
+    def carregar_venda(self):
+       
+
