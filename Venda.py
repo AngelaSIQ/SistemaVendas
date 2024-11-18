@@ -1,13 +1,14 @@
 import json as js
+from Produto import Produto
 class Venda:
-    def __init__(self, dataVenda):
+    def __init__(self):
         self.__produtos = []
-        self.__dataVenda = dataVenda
+        self.__dataVenda = ""
         self.__total = 0.0
 
     def get_produtos(self):
         return self.__produtos
-        
+
     def get_dataVenda(self):
         return self.__dataVenda
 
@@ -21,6 +22,8 @@ class Venda:
         total = 0.0
         for produto in self.__produtos:
             total += produto.get_preco() * produto.get_quantidade()
+        self.__total = total
+        
         return total
 
     def removerProduto(self, nome):
@@ -40,6 +43,7 @@ class Venda:
                 print(f"Nome: {produto.get_nome()}, Preço: R${produto.get_preco():.2f}, Quantidade: {produto.get_quantidade()}")
 
     def salvar_venda(self):
+        self.calcularTotal()
         produtos = [obj.to_dict() for obj in self.__produtos]
         data = self.__dataVenda
         total = self.__total
@@ -48,5 +52,20 @@ class Venda:
             arquivo.write(json) 
 
     def carregar_venda(self):
-       
+        with open("venda.json", 'r') as arquivo:
+            dados = js.load(arquivo)
+            data = dados['data']
+            self.set_dataVenda(data)
+            for produto in dados['produtos']:
+                nome = produto['nome']
+                preco = produto['preco']
+                quantidade = produto['quantidade']
+                produto = Produto(nome, preco, quantidade)
+                self.__produtos.append(produto)
+            self.calcularTotal()
 
+
+
+
+        
+            
