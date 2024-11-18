@@ -1,19 +1,27 @@
 from Produto import Produto
 from Venda import Venda
+venda = Venda()
+opcional = input("deseja carregar dados anteriores (S/N)?")
 
-data = input("Digite a data da venda (formato: DD/MM/AAAA): ")
-venda = Venda(data)
+if opcional == 'S':
+    venda.carregar_venda()
+else:
+    data = input("Digite a data da venda (formato: DD/MM/AAAA): ")
+    venda.set_dataVenda(data)
+
+
+
 opcao = "0"
 
-while opcao != "4":
+while opcao != "6":  # Alterei para "6" já que o menu apresenta essa opção para sair
     print("\nMenu:")
     print("1. Adicionar Produto")
     print("2. Remover Produto")
     print("3. Listar Produtos e Mostrar Total")
-    print("4. salvar produtos")
-    print("5. carregar dados")
+    print("4. Salvar Produtos")
+    print("5. Carregar Dados")
     print("6. Sair")
-    
+
     opcao = input("Escolha uma opção: ")
 
     if opcao == "1":
@@ -22,7 +30,7 @@ while opcao != "4":
         preco_valido = False
         while not preco_valido:
             preco = input("Preço do Produto: ")
-            preco = preco.replace(',', '.')  
+            preco = preco.replace(',', '.')  # Substitui vírgula por ponto
             pontos = 0
             for caractere in preco:
                 if caractere == '.':
@@ -44,14 +52,14 @@ while opcao != "4":
 
         quantidade_valida = False
         while not quantidade_valida:
-            quantidade = input("Quantidade vendido: ")
+            quantidade = input("Quantidade vendida: ")
             if quantidade.isdigit():
                 quantidade = int(quantidade)
                 quantidade_valida = True
             else:
                 print("Quantidade inválida. Por favor, insira um número inteiro.")
 
-        produto = Produto(nome, preco, quantidade)
+        produto = Produto(nome, preco, quantidade)  # Corrigido a indentação para aqui
         venda.get_produtos().append(produto)
 
     elif opcao == "2":
@@ -63,15 +71,10 @@ while opcao != "4":
         print(f"Total da Venda: R${venda.calcularTotal():.2f}")
 
     elif opcao == "4":
-        print("arquivo salvo!")
+        print("Arquivo salvo!")
         venda.salvar_venda()
 
     elif opcao == "5":
-        print("a exibir produtos salvos") 
-         venda.carregar_venda()
-         venda.listarProdutos()   
-
-    elif opcao == "6":
         print("Saindo...")
 
     else:
